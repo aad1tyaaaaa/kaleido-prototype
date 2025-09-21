@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaleido - Upload Your Product</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap');
+        
+        :root {
+            --light-beige: #e2ded5;
+            --dark-brown: #372b23;
+            --grayish-green: #75756c;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light-beige);
+            color: var(--dark-brown);
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23372b23' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .upload-area {
+            border: 2px dashed var(--grayish-green);
+            transition: all 0.4s ease;
+            background: rgba(255, 255, 255, 0.7);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .upload-area:hover {
+            border-color: var(--dark-brown);
+            background-color: rgba(255, 255, 255, 0.9);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(55, 43, 35, 0.1);
+        }
+        
+        .upload-area-icon {
+            transition: all 0.4s ease;
+        }
+        
+        .upload-area:hover .upload-area-icon {
+            transform: scale(1.1) translateY(-5px);
+            color: var(--dark-brown);
+        }
+        
+        .btn-primary {
+            background-color: var(--dark-brown);
+            color: var(--light-beige);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--grayish-green);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(55, 43, 35, 0.2);
+        }
+        
+        .form-input {
+            border: 1px solid var(--grayish-green);
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.8);
+        }
+        
+        .form-input:focus {
+            border-color: var(--dark-brown);
+            box-shadow: 0 0 0 3px rgba(55, 43, 35, 0.1);
+            background: white;
+            transform: translateY(-2px);
+        }
+        
+        .preview-image {
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .preview-image:hover {
+            transform: scale(1.05) rotate(2deg);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(55, 43, 35, 0.15);
+        }
+        
+        .progress-bar {
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .camera-frame {
+            position: relative;
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            background: #f0ede6;
+            box-shadow: 
+                0 0 0 12px var(--dark-brown),
+                0 0 0 18px #e2ded5,
+                0 0 0 24px var(--dark-brown),
+                0 8px 20px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .camera-lens {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #4a4a4a 0%, #2c2c2c 70%);
+            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.6), 0 4px 20px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            border: 2px solid #5a5a5a;
+        }
+
+        /* New styles for a more realistic lens */
+        .camera-lens::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            filter: blur(8px);
+        }
+        
+        .camera-lens-inner {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #2c2c2c 0%, #000000 70%);
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8), 0 0 10px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .camera-lens-inner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* New lens flare effect */
+        .camera-lens-inner::before {
+            content: '';
+            position: absolute;
+            top: -10%;
+            left: -10%;
+            width: 120%;
+            height: 120%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: lens-flare 8s infinite linear;
+        }
+        
+        @keyframes lens-flare {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .camera-top {
+            position: absolute;
+            top: -10px;
+            width: 80px;
+            height: 20px;
+            background: var(--dark-brown);
+            border-radius: 5px 5px 0 0;
+            z-index: 10;
+        }
+        
+        .camera-button {
+            position: absolute;
+            bottom: 25px;
+            right: 25px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--dark-brown);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            z-index: 10;
+        }
+        
+        .camera-flash {
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #f5f5f5;
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+            z-index: 10;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+    <main class="container mx-auto flex items-center justify-center p-4">
+        <div id="main-container" class="bg-white rounded-2xl shadow-lg p-6 w-full max-w-6xl flex flex-col md:flex-row gap-8 card-hover" style="background: rgba(255, 255, 255, 0.95);">
+            <div class="w-full md:w-1/2 flex flex-col items-center justify-center p-4">
+                <h1 class="text-4xl font-bold mb-2 text-center">Share Your Craft</h1>
+                <p class="text-center text-[#75756c] mb-8">Upload images for a 3D view and professional look</p>
+                
+                <div class="camera-frame">
+                    <div class="camera-top"></div>
+                    <div class="camera-lens">
+                        <div id="main-image-upload" class="camera-lens-inner">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-white upload-area-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.862-1.292A2 2 0 0111.166 4h1.668a2 2 0 011.664.89l.862 1.292A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            <input type="file" id="main-image-input" class="hidden" accept="image/*">
+                        </div>
+                    </div>
+                    <div class="camera-flash"></div>
+                    <div class="camera-button"></div>
+                </div>
+                
+                <div class="flex gap-4 mt-8">
+                    <div id="add-image-1" class="upload-area w-24 h-24 rounded-lg flex flex-col items-center justify-center text-center text-xs">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-[#75756c] upload-area-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                        </svg>
+                        <p class="mt-2 text-[#75756c]">Add Image</p>
+                        <input type="file" id="add-image-input-1" class="hidden" accept="image/*">
+                    </div>
+                    <div id="add-image-2" class="upload-area w-24 h-24 rounded-lg flex flex-col items-center justify-center text-center text-xs">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-[#75756c] upload-area-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                        </svg>
+                        <p class="mt-2 text-[#75756c]">Add Image</p>
+                        <input type="file" id="add-image-input-2" class="hidden" accept="image/*">
+                    </div>
+                    <div id="add-image-3" class="upload-area w-24 h-24 rounded-lg flex flex-col items-center justify-center text-center text-xs">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-[#75756c] upload-area-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                        </svg>
+                        <p class="mt-2 text-[#75756c]">Add Image</p>
+                        <input type="file" id="add-image-input-3" class="hidden" accept="image/*">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="w-full md:w-1/2 p-4">
+                <form id="uploadForm" class="space-y-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label for="productName" class="block text-sm font-medium mb-2">Product Name</label>
+                            <input type="text" id="productName" class="w-full px-4 py-3 rounded-lg form-input" placeholder="Handcrafted Ceramic Vase">
+                        </div>
+                        <div>
+                            <label for="productPrice" class="block text-sm font-medium mb-2">Price ($)</label>
+                            <input type="number" id="productPrice" class="w-full px-4 py-3 rounded-lg form-input" placeholder="45.00" min="0" step="0.01">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label for="productStory" class="block text-sm font-medium mb-2">Product Story</label>
+                        <textarea id="productStory" rows="6" class="w-full px-4 py-3 rounded-lg form-input" placeholder="Share the inspiration, process, and meaning behind your creation."></textarea>
+                    </div>
+                    <div>
+                        <label for="materialsUsed" class="block text-sm font-medium mb-2">Materials Used</label>
+                        <input type="text" id="materialsUsed" class="w-full px-4 py-3 rounded-lg form-input" placeholder="Clay, natural glaze, love">
+                    </div>
+                    
+                    <div class="pt-2">
+                        <button type="submit" class="w-full py-4 px-6 rounded-xl btn-primary text-lg font-semibold flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                            </svg>
+                            Share Your Creation
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        // GSAP and JavaScript for interactive upload
+        document.addEventListener('DOMContentLoaded', function() {
+            const mainContainer = document.getElementById('main-container');
+            const mainImageUpload = document.getElementById('main-image-upload');
+            const mainImageInput = document.getElementById('main-image-input');
+            const additionalUploads = document.querySelectorAll('#add-image-1, #add-image-2, #add-image-3');
+            const uploadForm = document.getElementById('uploadForm');
+
+            // Page load animation
+            gsap.from(mainContainer, { duration: 1.2, scale: 0.95, opacity: 0, ease: "power3.out" });
+
+            // Attach event listeners to all upload areas
+            const allUploadAreas = [mainImageUpload, ...additionalUploads];
+            allUploadAreas.forEach(area => {
+                const input = area.querySelector('input[type="file"]');
+                
+                // Click to open file dialog
+                area.addEventListener('click', () => input.click());
+                
+                // Handle file change
+                input.addEventListener('change', (e) => handleImageUpload(e.target.files[0], area));
+                
+                // Drag and drop events
+                area.addEventListener('dragover', (e) => { 
+                    e.preventDefault(); 
+                    if (area === mainImageUpload) {
+                        gsap.to(area, { borderColor: '#ffffff', duration: 0.3 });
+                    } else {
+                        area.classList.add('border-[#372b23]');
+                    }
+                });
+                
+                area.addEventListener('dragleave', () => { 
+                    if (area === mainImageUpload) {
+                        gsap.to(area, { borderColor: 'transparent', duration: 0.3 });
+                    } else {
+                        area.classList.remove('border-[#372b23]');
+                    }
+                });
+                
+                area.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    if (area === mainImageUpload) {
+                        gsap.to(area, { borderColor: 'transparent', duration: 0.3 });
+                    } else {
+                        area.classList.remove('border-[#372b23]');
+                    }
+                    
+                    if (e.dataTransfer.files.length > 0) {
+                        handleImageUpload(e.dataTransfer.files[0], area);
+                    }
+                });
+            });
+
+            function handleImageUpload(file, container) {
+                if (!file || !file.type.startsWith('image/')) return;
+                
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.src = e.target.result;
+                    
+                    const isMainImage = container.id === 'main-image-upload';
+                    
+                    if (isMainImage) {
+                        img.classList.add("w-full", "h-full", "object-cover");
+                    } else {
+                        img.classList.add("absolute", "w-full", "h-full", "object-cover", "rounded-lg");
+                    }
+                    
+                    // Animate the placeholder out and the image in
+                    gsap.to(container.children, { opacity: 0, duration: 0.3, onComplete: () => {
+                        container.innerHTML = '';
+                        container.appendChild(img);
+                        
+                        // Add a remove button for added functionality
+                        const removeBtn = document.createElement('button');
+                        removeBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>';
+                        removeBtn.classList.add('absolute', 'top-2', 'right-2', 'bg-red-500', 'text-white', 'rounded-full', 'p-1', 'opacity-70', 'hover:opacity-100', 'transition-opacity');
+                        container.appendChild(removeBtn);
+                        
+                        gsap.from(img, { scale: 0.8, opacity: 0, duration: 0.5 });
+                        
+                        // Handle remove button click
+                        removeBtn.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            gsap.to(container, { opacity: 0, duration: 0.3, onComplete: () => {
+                                container.innerHTML = isMainImage ? 
+                                    `<svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-white upload-area-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.862-1.292A2 2 0 0111.166 4h1.668a2 2 0 011.664.89l.862 1.292A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                    <input type="file" id="main-image-input" class="hidden" accept="image/*">` : 
+                                    `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-[#75756c] upload-area-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                                    </svg>
+                                    <p class="mt-2 text-[#75756c]">Add Image</p>
+                                    <input type="file" class="hidden" accept="image/*">`;
+                                    
+                                // Re-add the file input
+                                const newInput = document.createElement('input');
+                                newInput.type = 'file';
+                                newInput.classList.add('hidden');
+                                newInput.accept = 'image/*';
+                                container.appendChild(newInput);
+                                
+                                // Re-attach event listeners
+                                newInput.addEventListener('change', (e) => handleImageUpload(e.target.files[0], container));
+                                container.addEventListener('click', () => newInput.click());
+                                
+                                gsap.to(container, { opacity: 1, duration: 0.3 });
+                            }});
+                        });
+                    }});
+                };
+                reader.readAsDataURL(file);
+            }
+
+            // Form submission logic
+            uploadForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const submitBtn = this.querySelector('button[type="submit"]');
+                const originalText = submitBtn.textContent;
+                
+                const productName = document.getElementById('productName').value.trim();
+                if (!productName) {
+                    gsap.to(document.getElementById('productName'), { x: 10, repeat: 3, yoyo: true, duration: 0.1, ease: 'power1.inOut' });
+                    return;
+                }
+
+                gsap.to(submitBtn, {
+                    scale: 0.9, duration: 0.2, onComplete: () => {
+                        submitBtn.textContent = 'Uploading...';
+                        submitBtn.disabled = true;
+                        gsap.to(submitBtn, { scale: 1, duration: 0.2 });
+                        
+                        const progress = { width: 0 };
+                        const progressBar = document.createElement('div');
+                        progressBar.className = 'h-1 bg-[#372b23] progress-bar mt-2 rounded-full';
+                        submitBtn.parentNode.appendChild(progressBar);
+                        
+                        gsap.to(progress, {
+                            width: 100, duration: 2, onUpdate: () => {
+                                progressBar.style.width = `${progress.width}%`;
+                            }, onComplete: () => {
+                                submitBtn.textContent = 'Upload Successful!';
+                                submitBtn.classList.remove('btn-primary');
+                                submitBtn.classList.add('bg-green-600');
+                                gsap.to(submitBtn, { scale: 1.05, duration: 0.2, yoyo: true, repeat: 1 });
+                                // Redirect to AI product page after short delay
+                                setTimeout(function() {
+                                    window.location.href = '../AI-product/aiproduct.html';
+                                }, 1200);
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artisan Profile | CraftFolio</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background: linear-gradient(135deg, #3a2c25 0%, #504439 50%, #6b5d52 100%);
+            min-height: 100vh;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 0.5px;
+        }
+        
+        input:-webkit-autofill,
+        textarea:-webkit-autofill {
+            -webkit-box-shadow: 0 0 0 30px rgba(226, 222, 213, 0.1) inset !important;
+            -webkit-text-fill-color: #3a2c25 !important;
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #8c7b6b 0%, #5c4f43 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .input-field:focus {
+            box-shadow: 0 0 0 2px #8c7b6b;
+            border-color: #8c7b6b;
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+            background: rgba(226, 222, 213, 0.93);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(192, 183, 171, 0.3);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-container {
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
+        }
+        
+        .profile-image-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+    </style>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brownish': '#60473d',
+                        'light-beige': '#e2ded5',
+                        'dark-brown': '#372b23',
+                        'grayish-green': '#75756c',
+                        'muted-taupe': '#b2a8a1',
+                        'warm-gray': '#b2a8a1',
+                        'accent-taupe': '#b2a8a1',
+                    }
+                }
+            }
+        }
+        // Redirect to product-upload.html after profile creation
+        document.addEventListener('DOMContentLoaded', function() {
+            var form = document.getElementById('profile-form');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    window.location.href = 'product-upload.html';
+                });
+            }
+        });
+    </script>
+</head>
+<body class="text-dark-brown min-h-screen flex items-center justify-center p-4 overflow-x-hidden">
+    <div class="w-full max-w-6xl mx-auto form-container rounded-2xl overflow-hidden">
+        <form id="profile-form" class="grid grid-cols-1 lg:grid-cols-3 gap-8 auto-rows-min bg-light-beige/95 p-10">
+            
+            body {
+                font-family: 'Inter', sans-serif;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+                background: linear-gradient(135deg, #e2ded5 0%, #b2a8a1 100%);
+                min-height: 100vh;
+            }
+
+            h1, h2, h3, h4 {
+                font-family: 'Playfair Display', serif;
+                letter-spacing: 0.5px;
+            }
+
+            input:-webkit-autofill,
+            textarea:-webkit-autofill {
+                -webkit-box-shadow: 0 0 0 30px #e2ded5 inset !important;
+                -webkit-text-fill-color: #372b23 !important;
+            }
+
+            .text-gradient {
+                background: linear-gradient(135deg, #60473d 0%, #b2a8a1 100%);
+                -webkit-background-clip: text;
+                background-clip: text;
+                color: transparent;
+            }
+
+            .input-field:focus {
+                box-shadow: 0 0 0 2px #60473d;
+                border-color: #60473d;
+            }
+
+            .card-hover {
+                transition: all 0.3s cubic-bezier(.4,0,.2,1);
+                background: rgba(226, 222, 213, 0.98);
+                backdrop-filter: blur(12px);
+                border: 1.5px solid #b2a8a1;
+                box-shadow: 0 8px 32px 0 rgba(96,71,61,0.10);
+            }
+
+            .card-hover:hover {
+                transform: translateY(-7px) scale(1.02);
+                box-shadow: 0 18px 36px -8px #60473d33;
+                border-color: #60473d;
+            }
+
+            .form-container {
+                box-shadow: 0 25px 50px -12px #372b2333;
+                background: #e2ded5;
+            }
+
+            .profile-image-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+            }
+
+                <!-- Bio Card -->
+                <div id="bio-card" class="card-hover p-8 rounded-xl">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-xl font-sem极速快3 text-dark-brown">Your Story</h3>
+                        <span class="text-xs text-accent-taupe"><span id="bio-char-count">0</span>/500 characters</span>
+                    </div>
+                    <textarea 
+                        id="shop-bio" 
+                        placeholder="Tell us about your craft, inspiration, techniques, and what makes your work unique. This is your opportunity to connect with potential clients and share your artistic journey." 
+                        rows="6" 
+                        maxlength="500"
+                        class="w-full bg-white/50 text-dark-brown placeholder-accent-taupe px-5 py-4 rounded-lg border border-warm-gray/30 focus:border-warm-gray focus:ring-0 outline-none transition-all duration-300 resize-y"
+                    ></textarea>
+                </div>
+
+                <!-- Social Media Card -->
+                <div id="social-card" class="card-hover p-8 rounded-xl">
+                    <h3 class="text-xl font-semibold text-dark-brown mb-6 border-b border-warm-gray/30 pb-3">Social Presence</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                        <div class="relative flex items-center">
+                            <svg class="absolute left-4 w-5 h-5 text-warm-gray" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.689-.073-4.948-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.79 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.40-1.439-1.40z"/></svg>
+                            <input type="text" placeholder="Instagram (@username)" class="input-field pl-12">
+                        </div>
+                        <div class="relative flex items-center">
+                            <svg class="absolute left-4 w-5 h-5 text-warm-gray" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l7.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                            <input type="text" placeholder="X / Twitter (@username)" class="input-field pl-12">
+                        </div>
+                        <div class="relative flex items-center">
+                            <!-- Fixed LinkedIn SVG -->
+                            <svg class="absolute left-4 w-5 h-5 text-warm-gray" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                            </svg>
+                            <input type="text" placeholder="LinkedIn Profile URL" class="input-field pl-12">
+                        </div>
+                        <div class="relative flex items-center">
+                            <!-- Fixed Website/Portfolio SVG -->
+                            <svg class="absolute left-4 w-5 h-5 text-warm-gray" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                            </svg>
+                            <input type="text" placeholder="Website / Portfolio URL" class="input-field pl-12">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Section -->
+                <div id="submit-card" class="flex flex-col sm:flex-row gap-4 items-center justify-between mt-4">
+                                        <p class="text-brownish text-sm text-center sm:text-left">By creating a profile, you agree to our <a href="#" class="text-muted-taupe hover:underline">Terms of Service</a> and <a href="#" class="text-muted-taupe hover:underline">Privacy Policy</a></p>
+                                        <button type="submit" class="w-full sm:w-auto bg-brownish hover:bg-dark-brown text-light-beige font-bold py-3 px-10 rounded-xl shadow-md transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-brownish/60 focus:ring-offset-2">
+                                                Create Profile
+                                        </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Style all input fields
+        document.querySelectorAll('.input-field').forEach(input => {
+            input.classList.add('w-full', 'bg-white/50', 'text-dark-brown', 'placeholder-accent-taupe', 'py-3', 'rounded-lg', '极速快3', 'border-warm-gray/30', 'focus:border-warm-gray', 'focus:ring-0', 'outline-none', 'transition-all', 'duration-300', 'px-4');
+        });
+
+        // Image preview functionality
+        function previewImage(event) {
+            if (event.target.files && event.target.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('photo-preview').src = e.target.result;
+                    document.getElementById('photo-preview').classList.remove('hidden');
+                    document.getElementById('upload-icon').classList.add('hidden');
+                }
+                reader.readAsDataURL(event.target.files[0]);
+            }
+        }
+
+        // Character count for bio textarea
+        document.getElementById('shop-bio').addEventListener('input', function() {
+            document.getElementById('bio-char-count').textContent = this.value.length;
+        });
+
+        // Animation on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const tl = gsap.timeline();
+            gsap.set('.card-hover', { autoAlpha: 0, y: 20 });
+
+            tl.to('.card-hover', {
+                autoAlpha: 1,
+                y: 0,
+                duration: 0.8,
+                stagger: 0.1,
+                ease: "power2.out"
+            });
+
+            // Add hover animations to cards
+            const cards = document.querySelectorAll('.card-hover');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    gsap.to(card, { y: -5, duration: 0.3, ease: 'power2.out' });
+                });
+                card.addEventListener('mouseleave', () => {
+                    gsap.to(card, { y: 0, duration: 0.3, ease: 'power2.out' });
+                });
+            });
+        });
+    </script>
+</body>
+
+    <!-- Koala image in bottom left -->
+    <img 
+        src="../artisans.png" 
+        alt="Koala" 
+        class="fixed left-0 bottom-0 w-70 h-80 object-contain drop-shadow-lg z-40 pointer-events-none select-none pl-4"
+        style="opacity: 0.92;"
+    >
+
+    <!-- Chai image in top right -->
+    <img 
+        src="../gossip.png" 
+        alt="Gossip" 
+        class="fixed right-0 bottom-0 w-50 h-60 object-contain drop-shadow-lg z-40 pointer-events-none select-none"
+        style="opacity: 0.92;"
+    >
+</body>
+</html>

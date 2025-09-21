@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meet the Artisans | Kaleido</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-warm: #F8F5F0;
+            --text-dark: #372b23;
+            --accent-terracotta: #DD6E42;
+            --accent-blue: #3B5998;
+            --text-muted: #8A8A8A;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-warm);
+            color: var(--text-dark);
+        }
+
+        h1, h2, h3, .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .artisan-card-image-wrapper {
+            aspect-ratio: 1 / 1;
+        }
+
+        .artisan-card-image {
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .artisan-card:hover .artisan-card-image {
+            transform: scale(1.05);
+        }
+
+        .filter-btn.active {
+            background-color: var(--accent-blue);
+            color: rgb(70, 42, 42);
+        }
+    </style>
+</head>
+<body class="bg-bg-warm">
+
+    <header id="main-header" class="sticky top-0 left-0 w-full z-50 bg-bg-warm/80 backdrop-blur-md shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-3xl font-serif font-bold tracking-wide">Kaleido</a>
+            <div class="hidden lg:flex items-center space-x-8">
+                <a href="index.html#features" class="text-lg hover:text-accent-terracotta transition-colors duration-300">Crafts</a>
+                <a href="artisans.html" class="text-lg text-accent-terracotta font-semibold">Artisans</a>
+                <a href="kalakatha.html" class="text-lg hover:text-accent-terracotta transition-colors duration-300">Kalakatha</a>
+                <a href="about.html" class="text-lg hover:text-accent-terracotta transition-colors duration-300">About</a>
+            </div>
+            <a href="#cart" class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                </svg>
+            </a>
+        </nav>
+    </header>
+
+    <main>
+        <section id="artisan-hero" class="text-center py-20 md:py-32 px-4">
+            <h1 class="text-5xl md:text-7xl font-bold text-[#372b23]">Meet the Makers</h1>
+            <p class="mt-4 text-lg md:text-xl max-w-2xl mx-auto text-[#372b23]">
+                The heart and soul of Kaleido. Discover the stories, traditions, and passions woven into every unique creation.
+            </p>
+        </section>
+
+        <section id="filters" class="container mx-auto px-6 mb-12">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="flex flex-wrap items-center gap-3">
+                    <button class="filter-btn active px-5 py-2 rounded-full text-sm font-medium transition-all duration-300">All Crafts</button>
+                    <button class="filter-btn bg-white px-5 py-2 rounded-full text-sm font-medium hover:bg-gray-200 transition-all duration-300">Pottery</button>
+                    <button class="filter-btn bg-white px-5 py-2 rounded-full text-sm font-medium hover:bg-gray-200 transition-all duration-300">Textiles</button>
+                    <button class="filter-btn bg-white px-5 py-2 rounded-full text-sm font-medium hover:bg-gray-200 transition-all duration-300">Woodwork</button>
+                    <button class="filter-btn bg-white px-5 py-2 rounded-full text-sm font-medium hover:bg-gray-200 transition-all duration-300">Jewelry</button>
+                </div>
+                <div class="relative w-full md:w-64">
+                    <input type="text" placeholder="Search for an artisan..." class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:ring-2 focus:ring-accent-blue focus:border-transparent outline-none transition">
+                    <svg class="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </div>
+            </div>
+        </section>
+
+        <section id="artisan-grid" class="container mx-auto px-6 py-16">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
+                
+                <div class="artisan-card bg-white rounded-xl shadow-lg overflow-hidden group">
+                    <div class="artisan-card-image-wrapper overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1541696432-82c6da8ce7bf?q=80&w=800" alt="Portrait of Priya Sharma" class="artisan-card-image w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-[#372b23]">Priya Sharma</h3>
+                        <p class="text-accent-terracotta font-medium mb-2">Ceramic Artist</p>
+                        <p class="text-sm text-[#372b23] mb-4">Jaipur, Rajasthan</p>
+                        <p class="text-[#372b23] mb-5">"My work is a dialogue between earth and hand, shaping clay into vessels of modern tradition."</p>
+                        <a href="#" class="font-semibold text-accent-blue group-hover:underline">View Profile →</a>
+                    </div>
+                </div>
+
+                <div class="artisan-card bg-white rounded-xl shadow-lg overflow-hidden group">
+                     <div class="artisan-card-image-wrapper overflow-hidden">
+                        <img src="textile.jpg" alt="Portrait of Rajesh Kumar" class="artisan-card-image w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-[#372b23]">Rajkumari</h3>
+                        <p class="text-accent-terracotta font-medium mb-2">Textile Weaver</p>
+                        <p class="text-sm text-[#372b23] mb-4">Varanasi, Uttar Pradesh</p>
+                        <p class="text-[#372b23] mb-5">"Each thread tells a story of my ancestors. I simply weave them together for the world to see."</p>
+                        <a href="#" class="font-semibold text-accent-blue group-hover:underline">View Profile →</a>
+                    </div>
+                </div>
+
+                <div class="artisan-card bg-white rounded-xl shadow-lg overflow-hidden group">
+                     <div class="artisan-card-image-wrapper overflow-hidden">
+                        <img src="wood.jpg" alt="Portrait of Anjali Desai" class="artisan-card-image w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-[#372b23]">Anuj Desai</h3>
+                        <p class="text-accent-terracotta font-medium mb-2">Wood Carver</p>
+                        <p class="text-sm text-[#372b23] mb-4">Srinagar, Kashmir</p>
+                        <p class="text-[#372b23] mb-5">"From the heart of the walnut tree, I carve intricate patterns that echo the beauty of the valley."</p>
+                        <a href="#" class="font-semibold text-accent-blue group-hover:underline">View Profile →</a>
+                    </div>
+                </div>
+
+                 </div>
+        </section>
+
+        <section id="join-cta" class="bg-accent-blue text-white">
+            <div class="container mx-auto px-6 py-20 text-center">
+                <h2 class="text-4xl md:text-5xl font-bold">Are You an Artisan?</h2>
+                <p class="mt-4 text-lg max-w-xl mx-auto opacity-90">
+                    Join our vibrant community of creators. Let our AI tools handle the marketing, so you can focus on what you do best—creating.
+                </p>
+                <a href="#join" class="inline-block mt-8 px-8 py-3 bg-white text-accent-blue font-bold rounded-full text-lg hover:bg-gray-200 transform hover:scale-105 transition-all duration-300">
+                    Join Kaleido Today
+                </a>
+            </div>
+        </section>
+
+    </main>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            gsap.registerPlugin(ScrollTrigger);
+
+            // --- PAGE LOAD ANIMATIONS ---
+            gsap.from("#artisan-hero h1, #artisan-hero p", {
+                duration: 1,
+                y: 30,
+                opacity: 0,
+                stagger: 0.2,
+                ease: "power3.out"
+            });
+
+            gsap.from("#filters", {
+                duration: 1,
+                y: 30,
+                opacity: 0,
+                ease: "power3.out",
+                delay: 0.4
+            });
+
+            // --- STAGGERED GRID ANIMATION ---
+            const artisanCards = gsap.utils.toArray('.artisan-card');
+            
+            // Set initial state
+            gsap.set(artisanCards, { y: 50, autoAlpha: 0 });
+
+            ScrollTrigger.batch(artisanCards, {
+                start: "top 85%",
+                onEnter: batch => gsap.to(batch, {
+                    y: 0,
+                    autoAlpha: 1,
+                    duration: 0.8,
+                    stagger: 0.1,
+                    ease: "power3.out",
+                    overwrite: true
+                }),
+                onLeaveBack: batch => gsap.set(batch, { y: 50, autoAlpha: 0, overwrite: true })
+            });
+            
+            // --- CTA ANIMATION ---
+            gsap.from("#join-cta > *", {
+                scrollTrigger: {
+                    trigger: "#join-cta",
+                    start: "top 80%"
+                },
+                duration: 1,
+                y: 50,
+                opacity: 0,
+                stagger: 0.2,
+                ease: "power3.out"
+            });
+
+            // --- FILTER BUTTONS LOGIC (VISUAL ONLY) ---
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    // In a real app, you would add filtering logic here.
+                });
+            });
+
+        });
+    </script>
+</body>
+</html>

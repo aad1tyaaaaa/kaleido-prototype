@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaleido - Where Tradition Meets Tomorrow</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-warm: #F8F5F0;
+            --text-dark: #372b23;
+            --accent-terracotta: #DD6E42;
+            --accent-blue: #3B5998;
+            --accent-gold: #E3B505;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-warm);
+            color: var(--text-dark);
+            overscroll-behavior: none;
+        }
+
+        h1, h2, h3, .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        /* This keeps the horizontal scroll section from having a vertical scrollbar */
+        .horizontal-scroll-section {
+            overflow-x: clip;
+        }
+
+        /* Styling the scrollbar for a polished look */
+        ::-webkit-scrollbar {
+            height: 6px;
+            width: 6px;
+            background: #e0e0e0;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-terracotta);
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="bg-bg-warm">
+
+    <header id="main-header" class="fixed top-0 left-0 w-full z-50 bg-bg-warm/80 backdrop-blur-md">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-3xl font-serif font-bold tracking-wide">Kaleido</a>
+            <div class="hidden lg:flex items-center space-x-8">
+                <a href="#features" class="text-lg hover:text-accent-terracotta transition-colors duration-300">Crafts</a>
+                <a href="artisans.html" class="text-lg hover:text-accent-terracotta transition-colors duration-300">Artisans</a>
+                <a href="kalakatha.html" class="text-lg hover:text-accent-terracotta transition-colors duration-300">Kalakatha</a>
+                <a href="about.html" class="text-lg hover:text-accent-terracotta transition-colors duration-300">About</a>
+            </div>
+            <!-- Search bar -->
+            <div class="hidden md:flex items-center mx-4 space-x-3">
+                <input type="text" placeholder="Search..." class="px-3 py-1.5 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-accent-terracotta bg-white text-sm w-48 transition-all duration-200 shadow-sm" />
+                <!-- Lazy Mode Toggle Button -->
+                <button id="lazyModeToggle" class="px-4 py-1.5 rounded-full bg-accent-terracotta text-[#372b23] font-semibold text-sm shadow hover:bg-accent-gold focus:outline-none focus:ring-2 focus:ring-accent-terracotta transition-all duration-200">
+                    Lazy Mode
+                </button>
+            </div>
+            <a href="#cart" class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                </svg>
+            </a>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero" class="h-screen w-full flex flex-col justify-center items-center text-center px-4">
+            <div class="max-w-4xl">
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight text-[#372b23]">
+                    <span class="d-block hero-text">Your Craft,</span>
+                    <span class="d-block hero-text text-accent-terracotta">Amplified by AI.</span>
+                </h1>
+                <p class="mt-6 text-lg md:text-xl max-w-2xl mx-auto hero-text text-[#372b23]">
+                    Kaleido is the AI co-pilot for artisans. We bridge the gap between timeless craftsmanship and the digital world, helping you tell your story and grow your business.
+                </p>
+                <a href="#features" class="inline-block mt-10 px-10 py-4 bg-accent-blue text-white font-semibold rounded-full text-lg hero-text hover:bg-opacity-90 transform hover:scale-105 transition-all duration-300">
+                    Discover the Features
+                </a>
+            </div>
+        </section>
+
+        <section id="features" class="horizontal-scroll-section relative h-screen">
+            <div id="scroll-container" class="w-[400vw] h-full flex flex-nowrap relative">
+                
+                <div class="panel w-screen h-screen flex items-center justify-center bg-gray-100">
+                    <div class="w-11/12 md:w-10/12 lg:w-8/12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                        <div class="text-content">
+                            <h2 class="text-5xl font-bold mb-4">AI Storytelling & Branding</h2>
+                            <p class="text-lg text-gray-600">Our AI analyzes your craft and customer feedback to generate compelling product descriptions, brand narratives, and social media content that resonates with your unique voice, powered by Google's Natural Language API.</p>
+                        </div>
+                        <div class="visual-content h-96 bg-white p-6 rounded-2xl shadow-xl flex items-center justify-center">
+                                                     </div>
+                    </div>
+                </div>
+
+                <div class="panel w-screen h-screen flex items-center justify-center bg-amber-50">
+                     <div class="w-11/12 md:w-10/12 lg:w-8/12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                        <div class="text-content">
+                            <h2 class="text-5xl font-bold mb-4">Instant Professional Photos</h2>
+                            <p class="text-lg text-gray-600">Upload a simple photo of your product, and let our AI transform it. Using Imagen 3, we add professional lighting, remove distracting backgrounds, and create stunning, studio-quality images that sell.</p>
+                        </div>
+                        <div class="visual-content h-96 flex items-center justify-center">
+                                                    </div>
+                    </div>
+                </div>
+
+                <div class="panel w-screen h-screen flex items-center justify-center bg-sky-50">
+                     <div class="w-11/12 md:w-10/12 lg:w-8/12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                        <div class="text-content">
+                            <h2 class="text-5xl font-bold mb-4">Showcase Your Process</h2>
+                            <p class="text-lg text-gray-600">Engage customers with short, captivating videos of your creation process. Our platform makes it easy to share your craft in an Instagram Reels-style format, connecting viewers directly to your products.</p>
+                        </div>
+                        <div class="visual-content h-96 flex items-center justify-center">
+                                                   </div>
+                    </div>
+                </div>
+
+                <div class="panel w-screen h-screen flex items-center justify-center bg-rose-50">
+                     <div class="w-11/12 md:w-10/12 lg:w-8/12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                        <div class="text-content">
+                            <h2 class="text-5xl font-bold mb-4">A Revolutionary Shopping Experience</h2>
+                            <p class="text-lg text-gray-600">Discover products with our playful Swipe Mode or switch to Lazy Mode for a traditional grid view. We offer a dual shopping experience that is both fun and functional, catering to every type of shopper.</p>
+                        </div>
+                        <div class="visual-content h-96 flex items-center justify-center">
+                                                     </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="h-screen w-full flex flex-col justify-center items-center text-center bg-bg-warm px-4">
+            <div class="max-w-4xl">
+                 <h2 class="text-5xl md:text-6xl font-bold leading-tight">
+                    Ready to Share Your Story?
+                </h2>
+                <p class="mt-6 text-lg md:text-xl max-w-2xl mx-auto">
+                    Join a community of passionate creators and let Kaleido's AI tools help you shine.
+                </p>
+                <a href="#join" class="inline-block mt-10 px-10 py-4 bg-accent-terracotta text-white font-semibold rounded-full text-lg hover:bg-opacity-90 transform hover:scale-105 transition-all duration-300">
+                    Join as an Artisan
+                </a>
+            </div>
+        </section>
+
+    </main>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            gsap.registerPlugin(ScrollTrigger);
+
+            // --- Lazy Mode Toggle Logic ---
+            const lazyToggle = document.getElementById('lazyModeToggle');
+            let lazyMode = false;
+            if (lazyToggle) {
+                lazyToggle.addEventListener('click', function() {
+                    lazyMode = !lazyMode;
+                    document.body.classList.toggle('lazy-mode', lazyMode);
+                    lazyToggle.textContent = lazyMode ? 'Swipe Mode' : 'Lazy Mode';
+                });
+            }
+
+            // --- HERO ANIMATIONS ---
+            gsap.from(".hero-text", {
+                duration: 1,
+                y: 50,
+                opacity: 0,
+                stagger: 0.2,
+                ease: "power3.out",
+                delay: 0.5
+            });
+
+            gsap.from("#main-header", {
+                duration: 1,
+                y: -100,
+                opacity: 0,
+                ease: "power3.out"
+            });
+            
+            // --- HORIZONTAL SCROLLING LOGIC ---
+            const scrollContainer = document.querySelector("#scroll-container");
+            const panels = gsap.utils.toArray(".panel");
+            
+            // Use GSAP's matchMedia for responsive animations
+            ScrollTrigger.matchMedia({
+                
+                // --- DESKTOP ANIMATION (Horizontal Scroll) ---
+                "(min-width: 1024px)": function() {
+                    gsap.to(panels, {
+                        xPercent: -100 * (panels.length - 1),
+                        ease: "none",
+                        scrollTrigger: {
+                            trigger: "#features",
+                            pin: true,
+                            scrub: 1,
+                            snap: 1 / (panels.length - 1),
+                            end: () => "+=" + scrollContainer.offsetWidth
+                        }
+                    });
+
+                    // Animate content within each panel as it comes into view
+                    panels.forEach((panel) => {
+                        const textContent = panel.querySelector(".text-content");
+                        const visualContent = panel.querySelector(".visual-content");
+                        
+                        gsap.from([textContent, visualContent], {
+                             y: 100,
+                             opacity: 0,
+                             duration: 1,
+                             ease: "power3.out",
+                             stagger: 0.2,
+                             scrollTrigger: {
+                                 trigger: panel,
+                                 containerAnimation: gsap.getTweensOf(panels)[0], // Link to the main scroll animation
+                                 start: "left center"
+                             }
+                        });
+                    });
+                },
+
+                // --- MOBILE ANIMATION (Vertical Stack) ---
+                "(max-width: 1023px)": function() {
+                    // On mobile, the panels will just stack vertically, but we can still add animations
+                    panels.forEach((panel) => {
+                        const textContent = panel.querySelector(".text-content");
+                        const visualContent = panel.querySelector(".visual-content");
+
+                         gsap.from([textContent, visualContent], {
+                             y: 100,
+                             opacity: 0,
+                             duration: 1,
+                             ease: "power3.out",
+                             stagger: 0.2,
+                             scrollTrigger: {
+                                 trigger: panel,
+                                 start: "top 80%"
+                             }
+                        });
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

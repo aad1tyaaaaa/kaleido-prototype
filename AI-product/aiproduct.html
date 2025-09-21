@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elegant Product Showcase</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* --- Font Imports and Variables --- */
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap');
+
+        :root {
+            --light-beige: #e2ded5;
+            --dark-brown: #372b23;
+            --container-bg: #837777;
+            --text-color: #f0ede6;
+        }
+
+        /* --- Global and Body Styling --- */
+        body, html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light-beige);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23372b23' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* --- Main Container Layout --- */
+        .container-wrapper {
+            background-color: var(--container-bg);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5%;
+            width: 90%;
+            height: 80%;
+            max-width: 1500px;
+            flex-wrap: wrap;
+        }
+
+        /* --- Image Section Styling --- */
+        .product-image-container {
+            flex: 1;
+            min-width: 400px;
+            max-width: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+            text-align: center;
+        }
+
+        .product-image {
+            max-width: 100%;
+            max-height: 580px;
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* --- Audio Controls Styling --- */
+        .audio-controls {
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .storytelling-image {
+            max-width: 300px;
+            width: 100%;
+            margin-bottom: 18px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            object-fit: cover;
+            display: block;
+        }
+        
+        .audio-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2em;
+            font-weight: 600;
+            line-height: 1.3;
+            color: var(--text-color);
+            text-align: center;
+        }
+
+        .audio-button {
+            background-color: var(--light-beige);
+            color: var(--dark-brown);
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .audio-button:hover {
+            background-color: var(--grayish-green);
+            color: var(--text-color);
+            transform: translateY(-2px);
+        }
+
+        .audio-button svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* --- Responsive Adjustments --- */
+        @media (max-width: 768px) {
+            .container-wrapper {
+                flex-direction: column;
+                height: auto;
+                padding: 20px;
+            }
+            .product-image-container {
+                max-width: 100%;
+                min-width: auto;
+            }
+            .audio-controls {
+                align-items: center;
+                text-align: center;
+            }
+            .audio-text {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container-wrapper">
+    <a href="../home/index.html" id="kaleidoLogo" style="position: absolute; top: 30px; left: 40px; font-size: 2.2rem; font-family: 'Playfair Display', serif; font-weight: bold; color: #372b23; text-decoration: none; z-index: 100; cursor:pointer;">Kaleido</a>
+    <div class="product-image-container">
+            <h1 class="section-title">AI Generated Image</h1>
+            <img src="ai.jpg" alt="AI Generated" class="product-image">
+        </div>
+        <div class="audio-controls">
+            <img src="stoytelling.png" alt="Storytelling" class="storytelling-image">
+            <p class="audio-text">Hear the Story of This Exquisite Craft</p>
+            <button id="playAudio" class="audio-button">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />
+                </svg>
+                <span>Listen Now</span>
+            </button>
+            <audio id="productAudio" src="audio.mp3" preload="auto"></audio>
+
+            <!-- ✅ View Full Details Button -->
+            <button id="viewDetailsBtn" class="audio-button">
+                <a href="../home/index.html" id="viewDetailsBtn" class="audio-button" style="display:inline-flex;align-items:center;gap:10px;text-decoration:none;">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                    <span>View Full Details</span>
+                </a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const playButton = document.getElementById('playAudio');
+            const productAudio = document.getElementById('productAudio');
+            const playButtonText = playButton.querySelector('span');
+            const playIcon = `<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />`;
+            const pauseIcon = `<path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />`;
+
+            // Play/Pause functionality
+            playButton.addEventListener('click', function() {
+                if (productAudio.paused) {
+                    productAudio.play();
+                    playButtonText.textContent = 'Pause Story';
+                    playButton.querySelector('svg').innerHTML = pauseIcon;
+                } else {
+                    productAudio.pause();
+                    playButtonText.textContent = 'Listen Now';
+                    playButton.querySelector('svg').innerHTML = playIcon;
+                }
+            });
+
+            // Reset button when audio ends
+            productAudio.addEventListener('ended', function() {
+                playButtonText.textContent = 'Listen Again';
+                playButton.querySelector('svg').innerHTML = playIcon;
+            });
+
+            // ✅ Handle View Details navigation
+            // No JS needed for navigation, handled by anchor tags above
+        });
+    </script>
+</body>
+</html>

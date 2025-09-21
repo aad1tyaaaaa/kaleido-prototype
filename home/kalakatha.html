@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalakatha | Kaleido</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-warm: #F8F5F0;
+            --text-dark: #2A2A2A;
+            --accent-terracotta: #DD6E42;
+            --accent-blue: #3B5998;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-warm);
+            color: var(--text-dark);
+            overscroll-behavior: none; /* Prevent scroll chaining for a true reels feel */
+        }
+
+        h1, h2, h3, .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Fullscreen video container */
+        .reel-item {
+            scroll-snap-align: start;
+            min-height: 100vh; /* Ensure each reel takes full viewport height */
+            width: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden; /* Important for video scaling */
+        }
+
+        /* Cylindrical (vertical pill) video container for reels */
+        .reel-cylinder {
+            width: 340px;
+            height: 600px;
+            border-radius: 0;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 8px 32px 0 rgba(0,0,0,0.25);
+            background: #111;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .reel-cylinder-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+
+        .reel-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            object-fit: cover; /* Ensures video covers the entire container */
+            z-index: 10;
+        }
+
+        .reel-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 40%, rgba(0,0,0,0) 60%, rgba(0,0,0,0.6) 100%);
+            z-index: 20;
+            display: flex;
+            flex-direction: column;
+            justify-between: space-between;
+            padding: 2rem;
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+
+        .reel-info {
+            align-self: flex-start; /* Top-left info */
+        }
+
+        .reel-actions {
+            align-self: flex-end; /* Bottom-left info */
+            text-align: left;
+        }
+
+        .mute-button {
+            position: absolute;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 30;
+            background-color: rgba(0,0,0,0.5);
+            color: white;
+            border-radius: 50%;
+            padding: 0.75rem;
+            cursor: pointer;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            transition: background-color 0.3s;
+        }
+        .mute-button:hover {
+            background-color: rgba(0,0,0,0.7);
+        }
+    </style>
+</head>
+<body class="bg-black"> <header id="main-header" class="fixed top-0 left-0 w-full z-50 bg-black/50 backdrop-blur-md text-white">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-3xl font-serif font-bold tracking-wide">Kaleido</a>
+            <div class="hidden lg:flex items-center space-x-8">
+                <a href="index.html#features" class="text-lg hover:text-accent-terracotta transition-colors duration-300">Crafts</a>
+                <a href="artisans.html" class="text-lg hover:text-accent-terracotta transition-colors duration-300">Artisans</a>
+                <a href="kalakatha.html" class="text-lg text-accent-terracotta font-semibold">Kalakatha</a>
+                <a href="about.html" class="text-lg hover:text-accent-terracotta transition-colors duration-300">About</a>
+            </div>
+            <a href="#cart" class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                </svg>
+            </a>
+        </nav>
+    </header>
+
+    <main id="kalakatha-feed" class="relative snap-y snap-mandatory h-screen overflow-y-scroll">
+        <!-- Upload Reel Button (Instagram style, desktop) -->
+        <div class="w-full flex justify-center py-8 bg-black/70 z-30 sticky top-0">
+            <label class="flex flex-col items-center cursor-pointer">
+                <span class="flex items-center gap-2 px-6 py-3 bg-accent-terracotta text-white rounded-full font-semibold text-lg shadow-lg hover:bg-accent-blue transition-all duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                    </svg>
+                    Upload Reel
+                </span>
+                <input id="reel-upload-input" type="file" accept="video/mp4" class="hidden" />
+            </label>
+        </div>
+        
+        <div class="reel-item snap-start" id="reel-1">
+            <div class="flex items-center justify-center w-full h-full">
+                <div class="reel-cylinder">
+                    <video class="reel-cylinder-video" preload="auto" loop muted playsinline>
+                        <source src="2.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <button class="play-pause-btn absolute bottom-6 left-1/2 -translate-x-1/2 z-30 bg-white/80 text-black rounded-full px-4 py-2 font-semibold shadow hover:bg-accent-terracotta hover:text-white transition-all duration-200">Play</button>
+                </div>
+            </div>
+            <div class="reel-overlay">
+                <div class="reel-info">
+                    <h2 class="text-3xl md:text-4xl font-bold font-serif">Kalakatha</h2>
+                    <p class="text-lg md:text-xl mt-2 max-w-sm">Watch the magic unfold as artisans bring their creations to life.</p>
+                </div>
+                <div class="reel-actions">
+                    <h3 class="text-2xl font-semibold">Priya Sharma</h3>
+                    <p class="text-lg opacity-90 mb-3">Crafting a Terracotta Vase</p>
+                    <button class="px-6 py-2 bg-accent-terracotta text-white rounded-full hover:bg-opacity-90 transition-all duration-300">View Product</button>
+                    <button class="ml-3 px-6 py-2 border border-white text-white rounded-full hover:bg-white hover:text-black transition-all duration-300">View Artisan</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="reel-item snap-start" id="reel-2">
+            <div class="flex items-center justify-center w-full h-full">
+                <div class="reel-cylinder">
+                    <video class="reel-cylinder-video" preload="auto" loop muted playsinline>
+                        <source src="3.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <button class="play-pause-btn absolute bottom-6 left-1/2 -translate-x-1/2 z-30 bg-white/80 text-black rounded-full px-4 py-2 font-semibold shadow hover:bg-accent-terracotta hover:text-white transition-all duration-200">Play</button>
+                </div>
+            </div>
+            <div class="reel-overlay">
+                <div class="reel-info"></div> <div class="reel-actions">
+                    <h3 class="text-2xl font-semibold">Meera Devi</h3>
+                    <p class="text-lg opacity-90 mb-3">Hand-painting Intricate Designs</p>
+                    <button class="px-6 py-2 bg-accent-terracotta text-white rounded-full hover:bg-opacity-90 transition-all duration-300">View Product</button>
+                    <button class="ml-3 px-6 py-2 border border-white text-white rounded-full hover:bg-white hover:text-black transition-all duration-300">View Artisan</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="reel-item snap-start" id="reel-3">
+            <div class="flex items-center justify-center w-full h-full">
+                <div class="reel-cylinder">
+                    <video class="reel-cylinder-video" preload="auto" loop muted playsinline>
+                        <source src="2.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <button class="play-pause-btn absolute bottom-6 left-1/2 -translate-x-1/2 z-30 bg-white/80 text-black rounded-full px-4 py-2 font-semibold shadow hover:bg-accent-terracotta hover:text-white transition-all duration-200">Play</button>
+                </div>
+            </div>
+            <div class="reel-overlay">
+                <div class="reel-info"></div>
+                <div class="reel-actions">
+                    <h3 class="text-2xl font-semibold">Rajesh Kumar</h3>
+                    <p class="text-lg opacity-90 mb-3">Weaving Threads of Tradition</p>
+                    <button class="px-6 py-2 bg-accent-terracotta text-white rounded-full hover:bg-opacity-90 transition-all duration-300">View Product</button>
+                    <button class="ml-3 px-6 py-2 border border-white text-white rounded-full hover:bg-white hover:text-black transition-all duration-300">View Artisan</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="reel-item snap-start" id="reel-4">
+            <div class="flex items-center justify-center w-full h-full">
+                <div class="reel-cylinder">
+                    <video class="reel-cylinder-video" preload="auto" loop muted playsinline>
+                        <source src="1.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <button class="play-pause-btn absolute bottom-6 left-1/2 -translate-x-1/2 z-30 bg-white/80 text-black rounded-full px-4 py-2 font-semibold shadow hover:bg-accent-terracotta hover:text-white transition-all duration-200">Play</button>
+                </div>
+            </div>
+            <div class="reel-overlay">
+                <div class="reel-info"></div>
+                <div class="reel-actions">
+                    <h3 class="text-2xl font-semibold">Anjali Desai</h3>
+                    <p class="text-lg opacity-90 mb-3">Carving Elegance from Wood</p>
+                    <button class="px-6 py-2 bg-accent-terracotta text-white rounded-full hover:bg-opacity-90 transition-all duration-300">View Product</button>
+                    <button class="ml-3 px-6 py-2 border border-white text-white rounded-full hover:bg-white hover:text-black transition-all duration-300">View Artisan</button>
+                </div>
+            </div>
+        </div>
+        
+        <button id="mute-toggle" class="mute-button">
+            <svg id="volume-high" xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.69 11 4.103 11 5v14c0 .897-.077 1.31-.382 1.618l-4.707-4.707z" />
+            </svg>
+            <svg id="volume-off" xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17.293 17.293A1 1 0 0117 17H4a1 1 0 01-1-1v-4a1 1 0 011-1h3.414l4.707-4.707C12.923 3.69 13 4.103 13 5v3.134l1.157 1.157A4.954 4.954 0 0017 11c0 1.054-.234 2.05-.658 2.943l1.157 1.157a7.001 7.001 0 00-.73 3.251zm-7.071-7.071L10.586 9H4v4h4.586l.707.707z" />
+            </svg>
+        </button>
+
+    </main>
+    
+    <script>
+        // --- UPLOAD REEL LOGIC ---
+        document.getElementById('reel-upload-input').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const url = URL.createObjectURL(file);
+            // Create new reel DOM
+            const reel = document.createElement('div');
+            reel.className = 'reel-item snap-start';
+            reel.innerHTML = `
+                <div class="flex items-center justify-center w-full h-full">
+                    <div class="reel-cylinder">
+                        <video class="reel-cylinder-video" preload="auto" loop muted playsinline>
+                            <source src="${url}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <button class="play-pause-btn absolute bottom-6 left-1/2 -translate-x-1/2 z-30 bg-white/80 text-black rounded-full px-4 py-2 font-semibold shadow hover:bg-accent-terracotta hover:text-white transition-all duration-200">Play</button>
+                    </div>
+                </div>
+                <div class="reel-overlay flex flex-col justify-between">
+                    <div class="reel-info">
+                        <h2 class="text-3xl md:text-4xl font-bold font-serif">Your Reel</h2>
+                        <p class="text-lg md:text-xl mt-2 max-w-sm">Preview your uploaded video. (Refresh to remove)</p>
+                    </div>
+                </div>
+            `;
+            const feed = document.getElementById('kalakatha-feed');
+            feed.insertBefore(reel, feed.children[1]); // Insert after upload bar
+            // Optionally, scroll to the new reel
+            reel.scrollIntoView({behavior: 'smooth', block: 'center'});
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            gsap.registerPlugin(ScrollTrigger);
+
+            const kalakathaFeed = document.getElementById('kalakatha-feed');
+            // Use .reel-cylinder-video for all videos
+            const videos = gsap.utils.toArray('.reel-cylinder-video');
+            let activeVideo = null;
+            let isMuted = true; // Start muted
+            // --- PLAY/PAUSE BUTTON LOGIC ---
+            function updatePlayPauseBtn(video, btn) {
+                if (video.paused) {
+                    btn.textContent = 'Play';
+                } else {
+                    btn.textContent = 'Pause';
+                }
+            }
+            function setupPlayPauseButtons() {
+                document.querySelectorAll('.reel-cylinder').forEach(cylinder => {
+                    const video = cylinder.querySelector('.reel-cylinder-video');
+                    const btn = cylinder.querySelector('.play-pause-btn');
+                    if (video && btn) {
+                        btn.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                            if (video.paused) {
+                                video.play();
+                            } else {
+                                video.pause();
+                            }
+                            updatePlayPauseBtn(video, btn);
+                        });
+                        video.addEventListener('play', () => updatePlayPauseBtn(video, btn));
+                        video.addEventListener('pause', () => updatePlayPauseBtn(video, btn));
+                        updatePlayPauseBtn(video, btn);
+                    }
+                });
+            }
+            setupPlayPauseButtons();
+            // If new reels are added dynamically, call setupPlayPauseButtons() again after DOM update.
+            const observer = new MutationObserver(setupPlayPauseButtons);
+            observer.observe(kalakathaFeed, { childList: true, subtree: true });
+
+            // --- HEADER FADE ANIMATION ---
+            gsap.from("#main-header", {
+                duration: 0.8,
+                y: -100,
+                opacity: 0,
+                ease: "power3.out",
+                delay: 0.2
+            });
+
+            // --- MUTE TOGGLE LOGIC ---
+            const muteButton = document.getElementById('mute-toggle');
+            const volumeHighIcon = document.getElementById('volume-high');
+            const volumeOffIcon = document.getElementById('volume-off');
+
+            function updateMuteIcon() {
+                if (isMuted) {
+                    volumeHighIcon.classList.add('hidden');
+                    volumeOffIcon.classList.remove('hidden');
+                } else {
+                    volumeHighIcon.classList.remove('hidden');
+                    volumeOffIcon.classList.add('hidden');
+                }
+            }
+
+            muteButton.addEventListener('click', () => {
+                isMuted = !isMuted;
+                if (activeVideo) {
+                    activeVideo.muted = isMuted;
+                }
+                updateMuteIcon();
+            });
+
+            updateMuteIcon(); // Set initial icon state
+
+            // --- VIDEO PLAYBACK LOGIC ON SCROLL ---
+            videos.forEach((video, i) => {
+                ScrollTrigger.create({
+                    trigger: video.closest('.reel-item'),
+                    start: "top center",
+                    end: "bottom center",
+                    onEnter: () => {
+                        if (activeVideo && activeVideo !== video) {
+                            activeVideo.pause();
+                            activeVideo.currentTime = 0; // Reset video to start
+                        }
+                        video.play();
+                        video.muted = isMuted; // Apply current mute state
+                        activeVideo = video;
+                    },
+                    onLeave: () => { // When scrolled past the bottom
+                        if (video === activeVideo) {
+                            video.pause();
+                            video.currentTime = 0;
+                            activeVideo = null;
+                        }
+                    },
+                    onEnterBack: () => { // When scrolled back into view from bottom
+                        if (activeVideo && activeVideo !== video) {
+                            activeVideo.pause();
+                            activeVideo.currentTime = 0;
+                        }
+                        video.play();
+                        video.muted = isMuted;
+                        activeVideo = video;
+                    },
+                     onLeaveBack: () => { // When scrolled back past the top
+                        if (video === activeVideo) {
+                            video.pause();
+                            video.currentTime = 0;
+                            activeVideo = null;
+                        }
+                    }
+                });
+            });
+
+            // Play the first video on load, if it's in view
+            if (videos.length > 0) {
+                activeVideo = videos[0];
+                activeVideo.play();
+                activeVideo.muted = isMuted;
+            }
+
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaleido Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: #372b23;
+            overflow-x: hidden;
+        }
+
+        .navbar {
+            background-color: #e2ded5;
+            z-index: 1000;
+        }
+
+        .section-container {
+            display: flex;
+            width: fit-content;
+            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .section {
+            flex-shrink: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem;
+        }
+
+        .section-home { background-color: #f0f0e8; }
+        .section-about { background-color: #e2ded5; }
+        .section-kalakatha { background-color: #d1cbc0; }
+        .section-features { background-color: #c0b8ad; }
+        
+        .card-container {
+            display: flex;
+            gap: 2rem;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .card {
+            background-color: #f0f0e8;
+            border: 2px solid #75756c;
+            border-radius: 1rem;
+            padding: 2rem;
+            flex: 1;
+        }
+
+        .card h3 {
+            font-family: 'Playfair Display', serif;
+        }
+    </style>
+</head>
+<body class="bg-[#e2ded5]">
+
+    <nav class="navbar fixed top-0 left-0 right-0 py-4 px-8 shadow-md flex justify-between items-center">
+        <a href="index.html" class="text-2xl font-bold text-[#372b23]">Kaleido Platform</a>
+        <div class="space-x-8">
+            <a href="index.html" class="text-[#372b23] hover:text-[#75756c] transition">Home</a>
+            <a href="about.html" class="text-[#372b23] hover:text-[#75756c] transition font-bold underline">About</a>
+            <a href="kalakatha.html" class="text-[#372b23] hover:text-[#75756c] transition">Kalakatha</a>
+            <a href="index.html#features" class="text-[#372b23] hover:text-[#75756c] transition">Features</a>
+        </div>
+    </nav>
+
+    <div id="scroll-container" class="section-container">
+        <div id="home" class="section section-home flex-col text-center">
+            <h1 class="text-6xl font-extrabold mb-4 font-playfair-display text-[#372b23]">Amplify Your Craft.<br>Global Your Reach.</h1>
+            <p class="text-xl max-w-2xl text-[#372b23]">Kaleido empowers local artisans with AI-driven tools to simplify marketing, enhance storytelling, and optimize sales.</p>
+        </div>
+
+        <div id="about" class="section section-about flex-col text-center">
+            <div class="max-w-4xl">
+                <h2 class="text-5xl font-extrabold mb-8 font-playfair-display text-[#372b23]">Our Story, Our Mission</h2>
+                <p class="text-lg text-[#372b23] leading-relaxed">
+                    At Kaleido, we believe in the power of handmade products and the stories they carry. Our platform was born from a passion for preserving traditional craftsmanship and making it thrive in the digital age. We saw a gap between skilled artisans and a global audience eager for authentic, unique products. Our mission is to bridge this gap, serving as a co-pilot that provides intelligent tools to simplify the complexities of the digital economy.
+                    <br><br>
+                    We are dedicated to empowering every artisan to share their voice, showcase their unique process, and build a sustainable business. From the clay on the wheel to the click of a sale, Kaleido is here to support every step of the journey.
+                </p>
+            </div>
+        </div>
+
+        <div id="kalakatha" class="section section-kalakatha flex-col text-center">
+            <div class="max-w-4xl">
+                <h2 class="text-5xl font-extrabold mb-8 font-playfair-display text-[#372b23]">Kalakatha: The Story of Art</h2>
+                <p class="text-xl max-w-2xl text-[#372b23] mb-8">
+                    Kalakatha, a portmanteau of 'Kala' (Art) and 'Katha' (Story), is a space where the narrative behind each creation is brought to life. It's not just a gallery; it's a testament to the dedication, culture, and passion embedded in every product.
+                </p>
+                <div class="card-container">
+                    <div class="card text-left">
+                        <h3 class="text-2xl font-bold mb-4 text-[#372b23]">The Potter's Wheel</h3>
+                        <p class="text-sm text-[#372b23]">Explore the rhythmic dance of clay and hands, a process perfected over generations. See how a simple lump of earth is transformed into a vessel of art.</p>
+                    </div>
+                    <div class="card text-left">
+                        <h3 class="text-2xl font-bold mb-4 text-[#372b23]">Weaver's Loom</h3>
+                        <p class="text-sm text-[#372b23]">Witness the intricate journey of threads weaving together to form vibrant patterns. Each knot and strand tells a tale of tradition and meticulous craft.</p>
+                    </div>
+                    <div class="card text-left">
+                        <h3 class="text-2xl font-bold mb-4 text-[#372b23]">Woodcarver's Touch</h3>
+                        <p class="text-sm text-[#372b23]">Feel the passion behind every chisel stroke. This section reveals how raw wood is sculpted into stunning, intricate masterpieces that capture timeless stories.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="features" class="section section-features flex-col text-center">
+            <div class="max-w-4xl">
+                <h2 class="text-5xl font-extrabold mb-8 font-playfair-display text-[#372b23]">Intelligent Tools, Infinite Possibilities</h2>
+                <p class="text-xl max-w-2xl text-[#372b23] mb-8">
+                    Our platform is powered by cutting-edge AI to make your creative life easier.
+                </p>
+                <div class="card-container flex-col space-y-4">
+                    <div class="card text-left">
+                        <h3 class="text-2xl font-bold mb-2 text-[#372b23]">AI-Powered Storytelling</h3>
+                        <p class="text-sm text-[#372b23]">We help you find your unique voice by analyzing customer sentiment and generating brand-consistent content.</p>
+                    </div>
+                    <div class="card text-left">
+                        <h3 class="text-2xl font-bold mb-2 text-[#372b23]">Photo Enhancement</h3>
+                        <p class="text-sm text-[#372b23]">Automatically improve product images with AI-driven lighting, background removal, and color correction.</p>
+                    </div>
+                    <div class="card text-left">
+                        <h3 class="text-2xl font-bold mb-2 text-[#372b23]">Dual-Mode E-commerce</h3>
+                        <p class="text-sm text-[#372b23]">A playful 'Swipe Mode' for discovery and a classic 'Lazy Mode' for easy shopping.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const container = document.getElementById('scroll-container');
+        const sections = document.querySelectorAll('.section');
+        const links = document.querySelectorAll('nav a');
+        let currentSection = 0;
+
+        function updateScroll() {
+            container.style.transform = `translateX(-${currentSection * 100}vw)`;
+            links.forEach(link => link.classList.remove('active'));
+            links[currentSection].classList.add('active');
+        }
+
+        window.addEventListener('wheel', (e) => {
+            if (e.deltaY > 0) {
+                if (currentSection < sections.length - 1) {
+                    currentSection++;
+                }
+            } else {
+                if (currentSection > 0) {
+                    currentSection--;
+                }
+            }
+            updateScroll();
+        }, { passive: false });
+
+        links.forEach((link, index) => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                currentSection = index;
+                updateScroll();
+            });
+        });
+
+        // Initial state
+        updateScroll();
+    </script>
+</body>
+</html>

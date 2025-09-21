@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Handcrafted Fan | Kaleido</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --light-beige: #e2ded5;
+            --dark-brown: #372b23;
+            --brownish: #60473d;
+            --grayish-green: #75756c;
+            --muted-taupe: #b2a8a1;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--light-beige);
+            color: var(--dark-brown);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .thumbnail-active {
+            border-color: var(--brownish);
+            box-shadow: 0 0 0 2px var(--brownish);
+        }
+
+        .nav-link::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 2px;
+            background: var(--brownish);
+            transition: width .3s;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+    </style>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'light-beige': 'var(--light-beige)',
+                        'dark-brown': 'var(--dark-brown)',
+                        'brownish': 'var(--brownish)',
+                        'grayish-green': 'var(--grayish-green)',
+                        'muted-taupe': 'var(--muted-taupe)',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="antialiased">
+
+    <header id="header" class="py-6 px-8 max-w-screen-xl mx-auto flex justify-between items-center">
+    <a href="#" id="kaleidoLogo" class="font-serif text-2xl font-bold text-dark-brown">Kaleido</a>
+        <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
+            <a href="#" class="nav-link text-dark-brown">Crafts</a>
+            <a href="#" class="nav-link text-dark-brown">Artisans</a>
+            <a href="#" class="nav-link text-dark-brown">About</a>
+        </nav>
+        <button aria-label="Cart">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-dark-brown" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+            </svg>
+        </button>
+    </header>
+
+    <main class="max-w-screen-xl mx-auto py-8 px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16">
+            
+            <div id="gallery-container" class="w-full">
+                <div class="mb-4 aspect-square relative shadow-lg rounded-xl overflow-hidden">
+                    <img id="main-product-image" src="ai.jpg" alt="Main product view of a handcrafted fan" class="w-full h-full object-cover">
+                </div>
+                <div class="grid grid-cols-4 gap-4">
+                    <img src="p1 (1).jpg" alt="Product thumbnail 1" class="thumbnail-image aspect-square w-full object-cover rounded-lg cursor-pointer border-2 thumbnail-active transition-all duration-300">
+                    <img src="p2.png" alt="Product thumbnail 2" class="thumbnail-image aspect-square w-full object-cover rounded-lg cursor-pointer border-2 border-transparent hover:border-muted-taupe transition-all duration-300">
+                    <img src="p3.jpg" alt="Product thumbnail 3" class="thumbnail-image aspect-square w-full object-cover rounded-lg cursor-pointer border-2 border-transparent hover:border-muted-taupe transition-all duration-300">
+                    <img src="p4.jpg" alt="Product thumbnail 4" class="thumbnail-image aspect-square w-full object-cover rounded-lg cursor-pointer border-2 border-transparent hover:border-muted-taupe transition-all duration-300">
+                </div>
+            </div>
+
+            <div id="details-container" class="flex flex-col">
+                <a href="#" class="flex items-center gap-4 mb-6 group">
+                    <img src="vidya.png" alt="Artisan Vidya Mehta" class="w-12 h-12 rounded-full border-2 border-muted-taupe group-hover:border-brownish transition-colors">
+                    <div>
+                        <p class="font-semibold text-dark-brown group-hover:text-brownish transition-colors">Vidya Mehta</p>
+                        <p class="text-sm text-grayish-green">View Artisan Profile</p>
+                    </div>
+                </a>
+
+                <header class="mb-6 border-b border-muted-taupe/50 pb-6">
+                    <h1 class="font-serif text-5xl font-bold mb-4">Handcrafted Fan</h1>
+                    <p class="text-4xl font-semibold text-brownish">₹1,250.00</p>
+                </header>
+
+                <div class="mb-8">
+                    <h2 class="text-lg font-semibold mb-3 text-dark-brown">The Story</h2>
+                    <p class="text-grayish-green leading-relaxed">
+                        In a sun-drenched village in Gujarat, an artisan’s skilled hands weave threads of vibrant silk through fine bamboo slivers. Each fan is painted with miniature tales of folklore, carrying the whispers of ancient stories in its delicate design. More than just a tool to stir the air, it's a cherished piece of tradition.
+                    </p>
+                </div>
+
+                <div class="mb-10">
+                    <h2 class="text-lg font-semibold mb-3 text-dark-brown">Details</h2>
+                    <ul class="list-disc list-inside text-grayish-green space-y-1">
+                        <li>Materials: Bamboo, Silk Thread, Natural Dyes</li>
+                        <li>Dimensions: 15" H x 9" W</li>
+                        <li>Origin: Handmade in Kutch, Gujarat</li>
+                        <li>Care: Handle with care; wipe gently with a dry cloth.</li>
+                    </ul>
+                </div>
+                
+                <div class="mt-auto flex flex-col sm:flex-row gap-4">
+                    <button id="addToCartBtn" class="w-full sm:w-2/3 bg-brownish text-light-beige font-bold py-4 px-8 rounded-xl hover:bg-dark-brown focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brownish transition-all duration-300 transform hover:scale-[1.03]">
+                        Add to Cart
+                    </button>
+                    <button class="w-full sm:w-auto flex-grow bg-transparent border-2 border-muted-taupe text-grayish-green font-semibold py-4 px-6 rounded-xl hover:border-dark-brown hover:text-dark-brown transition-colors">
+                        Save for Later
+                    </button>
+                    <button class="bg-transparent border-2 border-muted-taupe text-grayish-green font-semibold py-4 px-5 rounded-xl hover:border-dark-brown hover:text-dark-brown transition-colors" aria-label="Play Story">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.108 12 5v14c0 .892-1.077 1.337-1.707.707L5.586 15z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Redirect on Add to Cart or Kaleido click
+            const addToCartBtn = document.getElementById('addToCartBtn');
+            if (addToCartBtn) {
+                addToCartBtn.addEventListener('click', function() {
+                    window.location.href = '../home/index.html';
+                });
+            }
+            const kaleidoLogo = document.getElementById('kaleidoLogo');
+            if (kaleidoLogo) {
+                kaleidoLogo.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    window.location.href = '../home/index.html';
+                });
+            }
+            // --- Image Gallery Logic ---
+            const mainImage = document.getElementById('main-product-image');
+            const thumbnails = document.querySelectorAll('.thumbnail-image');
+
+            thumbnails.forEach(thumbnail => {
+                thumbnail.addEventListener('click', (event) => {
+                    const newSrc = event.target.src;
+
+                    // Prevent reloading if the same thumbnail is clicked
+                    if (mainImage.src === newSrc) return;
+
+                    // Animate out the old image
+                    gsap.to(mainImage, {
+                        autoAlpha: 0,
+                        duration: 0.3,
+                        ease: 'power2.inOut',
+                        onComplete: () => {
+                            // Update src and animate in the new image
+                            mainImage.src = newSrc;
+                            gsap.to(mainImage, { autoAlpha: 1, duration: 0.3, ease: 'power2.inOut' });
+                        }
+                    });
+
+                    // Update active thumbnail style
+                    thumbnails.forEach(t => t.classList.remove('thumbnail-active'));
+                    event.target.classList.add('thumbnail-active');
+                });
+            });
+
+            // --- GSAP Page Load Animations ---
+            const tl = gsap.timeline();
+            gsap.set("#header", { autoAlpha: 0, y: -30 });
+            gsap.set("#gallery-container", { autoAlpha: 0, x: -30 });
+            gsap.set("#details-container > *", { autoAlpha: 0, x: 30 });
+
+            tl.to("#header", { autoAlpha: 1, y: 0, duration: 0.8, ease: "power2.out" })
+              .to("#gallery-container", { 
+                autoAlpha: 1, 
+                x: 0, 
+                duration: 1, 
+                ease: "power3.out" 
+            }, "-=0.6")
+              .to("#details-container > *", {
+                autoAlpha: 1,
+                x: 0,
+                duration: 0.8,
+                stagger: 0.1,
+                ease: "power2.out"
+            }, "-=0.8");
+        });
+    </script>
+</body>
+</html>
