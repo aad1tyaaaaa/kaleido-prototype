@@ -4,6 +4,11 @@
 
 Kaleido is a modern web platform that empowers artisans to showcase their crafts, tell their stories, and connect with a global audience using AI-driven tools. This prototype demonstrates the core features and user experience of the Kaleido platform.
 
+Live Prototype 🌐
+You can view the live prototype here: https://kaleido-prototype-001.vercel.app
+
+Features 🚀
+
 ## Features 🚀
 
 - **Artisan Profiles:** 👤 Create and manage artisan profiles with images and personal stories.
